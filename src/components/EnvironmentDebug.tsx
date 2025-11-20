@@ -12,29 +12,26 @@ export function EnvironmentDebug() {
   useEffect(() => {
     // Testar diferentes métodos de obter as variáveis
     const testEnvVars = () => {
-      const results: any = {
-        methods: {},
-        error: null
+      type MethodResult = { url?: string; key?: string; error?: unknown }
+      const results: { methods: Record<string, MethodResult> } = {
+        methods: {}
       }
 
       try {
-        // Método 1: process.env
-        // @ts-ignore
         results.methods.process_env = {
-          url: process.env.NEXT_PUBLIC_SUPABASE_URL || 'NOT_FOUND',
-          key: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'NOT_FOUND'
+          url: process.env.NEXT_PUBLIC_SUPABASE_URL ?? 'NOT_FOUND',
+          key: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? 'NOT_FOUND'
         }
       } catch (e) {
         results.methods.process_env = { error: e }
       }
 
       try {
-        // Método 2: window
-        // @ts-ignore
-        const windowEnv = window.__NEXT_DATA__?.props?.pageProps?.env
+        const w = window as unknown as { __NEXT_DATA__?: { props?: { pageProps?: { env?: Record<string, string> } } } }
+        const windowEnv = w.__NEXT_DATA__?.props?.pageProps?.env
         results.methods.window = {
-          url: windowEnv?.NEXT_PUBLIC_SUPABASE_URL || 'NOT_FOUND',
-          key: windowEnv?.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'NOT_FOUND'
+          url: windowEnv?.NEXT_PUBLIC_SUPABASE_URL ?? 'NOT_FOUND',
+          key: windowEnv?.NEXT_PUBLIC_SUPABASE_ANON_KEY ?? 'NOT_FOUND'
         }
       } catch (e) {
         results.methods.window = { error: e }
@@ -53,15 +50,15 @@ export function EnvironmentDebug() {
       }
 
       // Verificar qual método funcionou
-      const workingMethod = Object.entries(results.methods).find(([_, value]: any) => 
-        value?.url && value?.url !== 'NOT_FOUND' && value?.url !== 'undefined'
+      const workingMethod = Object.entries(results.methods).find(([, value]) => 
+        value?.url && value.url !== 'NOT_FOUND' && value.url !== 'undefined'
       )
 
       if (workingMethod) {
-        const [method, data]: any = workingMethod
+        const [, data] = workingMethod
         setEnvVars({
-          url: data.url,
-          key: data.key,
+          url: data.url ?? 'NOT_FOUND',
+          key: data.key ?? 'NOT_FOUND',
           error: null
         })
       } else {

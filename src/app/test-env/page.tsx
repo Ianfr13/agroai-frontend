@@ -1,5 +1,3 @@
-import { Suspense } from 'react'
-
 // Função assíncrona para testar variáveis no servidor
 async function getEnvVars() {
   'use server'
@@ -118,7 +116,7 @@ export default async function TestEnvPage() {
                 <p>Variáveis de ambiente não encontradas. Verifique:</p>
                 <ul className="list-disc list-inside mt-2 space-y-1">
                   <li>Configuração no Vercel: Settings → Environment Variables</li>
-                  <li>Se as variáveis estão em "All Environments"</li>
+                  <li>Se as variáveis estão em &quot;All Environments&quot;</li>
                   <li>Se os valores estão corretos (não são placeholders)</li>
                 </ul>
               </div>

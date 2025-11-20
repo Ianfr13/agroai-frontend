@@ -9,7 +9,7 @@ export function EnvScript() {
 
   // Filtra apenas variáveis que existem
   const validEnvVars = Object.fromEntries(
-    Object.entries(envVars).filter(([_, value]) => value !== undefined)
+    Object.entries(envVars).filter(([, value]) => value !== undefined)
   )
 
   if (Object.keys(validEnvVars).length === 0) {
