@@ -4,7 +4,7 @@ Uma plataforma moderna de inteligência artificial para agricultura, oferecendo 
 
 ## 🚀 Tecnologias Utilizadas
 
-- **Frontend**: Next.js 14, TypeScript, Tailwind CSS
+- **Frontend**: Next.js 16, TypeScript, Tailwind CSS
 - **Backend**: Supabase (Banco de Dados, Autenticação, Storage)
 - **Estado**: Context API, Hooks Personalizados
 - **UI/UX**: Lucide React, Sonner (Notificações)
